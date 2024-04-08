@@ -1,0 +1,43 @@
+useEffect(() => {
+    const fetchChatData = async () => {
+      if (selectedChat) {
+        try {
+          const token = localStorage.getItem('token');
+          if (!token) {
+            router.push('/auth/login');
+            return;
+          }
+
+          const response = await fetch(`http://localhost:3000/api/chat/${selectedChat._id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const UserChatdata = await response.json();
+            const MychatData = UserChatdata.map((chat) => ({
+              content: chat.content,
+              sender: chat.sender
+            }));
+            console.log("chatdayt here bc", MychatData);
+            setChatData(MychatData);
+          } else {
+            console.error('Failed to fetch chat data');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+    };
+
+    fetchChatData();
+  }, [selectedChat]);
+
+
+
+
+
+  
