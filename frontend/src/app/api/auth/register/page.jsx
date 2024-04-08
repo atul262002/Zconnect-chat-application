@@ -44,7 +44,7 @@ export default function RegistrationForm() {
 
         if (response.ok) {
           // Redirect to the success page
-          router.push("/auth/success");
+          router.push("/api/auth/success");
         } else {
           console.error("Registration failed");
         }
